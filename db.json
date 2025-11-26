@@ -8,9 +8,9 @@
       { "id": "2", "text": "another comment about post 1", "postId": "1" }
     ],
     "cosas":[
-        {"id": "1", "text":"prueba de API", "postId": "1" },
-        {"id": "2", "text":"Pedido", "postId": "1" },
-        {"id": "3", "text":"Completo", "postId": "1" }
+        {"id": "Tareas", "text":"prueba de API" },
+        {"id": "2", "text":"Pedido" },
+        {"id": "3", "text":"Completo" }
     ],
     "profile": {
       "name": "typicode"

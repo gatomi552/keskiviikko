@@ -1,219 +1,218 @@
 import React, { useState, useEffect } from "react";
-import {View,Text,Image,Button,ActivityIndicator,
-  TextInput,ScrollView,TouchableOpacity,} from "react-native";
+import { View, Text, Button, ActivityIndicator, TextInput, ScrollView, TouchableOpacity,
+} from "react-native";
 import axios from "axios";
 
-type  Tarea = {
+// 🔹 1) Cambia el tipo de datos según tu API  
+// 👇 EJEMPLO DE FORMATO (modifícalo a tu necesidad)
+type Item = {
   name: string;
-  types: string;
-  stats: { name: string; base: number }[];
+  image?: string;
+  category?: string;
+  stats?: { name: string; value: number }[];
 };
 
-export default function Pokedex() {
-  const [pokemon, setPokemon] = useState<Tarea | null>(null);
+export default function MiApp() {
+  const [item, setItem] = useState<Item | null>(null);
   const [cargando, setCargando] = useState(true);
   const [busqueda, setBusqueda] = useState("");
-  const [tipoActual, setTipoActual] = useState<string | null>(null);
-  const [listaTipo, setListaTipo] = useState<string[]>([]);
-  const [indexTipo, setIndexTipo] = useState<number>(0);
+  const [categoriaActual, setCategoriaActual] = useState<string | null>(null);
+  const [listaCategoria, setListaCategoria] = useState<string[]>([]);
+  const [indexCategoria, setIndexCategoria] = useState<number>(0);
 
-  // 🔥 Obtiene datos del Pokémon por nombre o id
-  const obtenerPokemon = async (input: string | number) => {
+  // ⭐ 2) FUNCIÓN PRINCIPAL PARA OBTENER UN ITEM  
+  //    Aquí pones tu endpoint principal
+  const obtenerItem = async (input: string | number) => {
     setCargando(true);
     try {
+
       const respuesta = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${input.toString().toLowerCase()}`
+        // 👇 AQUÍ PON TU ENDPOINT PRINCIPAL
+        `https://TU_API.com/items/${input}`
       );
+
       const data = respuesta.data;
 
-      const tipos = data.types.map((t: any) => t.type.name);
-
-      setPokemon({
-        name: data.name,
-        types: tipos,
-        stats: data.stats.map((s: any) => ({
-          name: s.stat.name,
-          base: s.base_stat,
+      // 👇 ADAPTA ESTO SEGÚN TU API
+      setItem({
+        name: data.name,                   // Nombre del item
+        image: data.image_url,             // Imagen (si existe)
+        category: data.category,           // Categoría
+        stats: data.stats?.map((s: any) => ({
+          name: s.name,
+          value: s.value,
         })),
       });
 
-      // Si tiene tipo, actualizamos tipoActual (para recorrer luego)
-      if (tipos.length > 0) setTipoActual(tipos[0]);
+      setCategoriaActual(data.category);
     } catch (error) {
-      console.error("❌ Error al obtener Pokémon:", error);
-      setPokemon(null);
+      console.error("❌ Error al obtener item:", error);
+      setItem(null);
     } finally {
       setCargando(false);
     }
   };
 
-  // 🔍 Buscar por nombre o número
+  // ⭐ 3) Buscar por nombre o ID
   const buscar = () => {
     if (busqueda.trim() === "") return;
-    obtenerPokemon(busqueda);
+    obtenerItem(busqueda);
   };
 
-  // 🎯 Buscar por tipo (guarda lista para avanzar luego)
-  const buscarPorTipo = async (tipo: string) => {
+  // ⭐ 4) Buscar lista filtrada por categoría  
+  //    — Cambia la ruta del filtro por categoría
+  const buscarPorCategoria = async (cat: string) => {
     setCargando(true);
     try {
       const respuesta = await axios.get(
-        `https://pokeapi.co/api/v2/type/${tipo.toLowerCase()}`
+        // 👇 AQUÍ PONES EL ENDPOINT QUE LISTA POR CATEGORÍA
+        `https://TU_API.com/category/${cat}`
       );
 
-      const lista = respuesta.data.pokemon.map(
-        (p: any) => p.pokemon.name
-      ) as string[];
+      // 👇 Adáptalo según cómo devuelva tu API
+      const lista = respuesta.data.items.map((i: any) => i.name);
 
-      setListaTipo(lista);
-      setIndexTipo(0);
-      setTipoActual(tipo);
-      await obtenerPokemon(lista[0]);
+      setListaCategoria(lista);
+      setIndexCategoria(0);
+      setCategoriaActual(cat);
+
+      await obtenerItem(lista[0]);
     } catch (error) {
-      console.error("❌ Error al filtrar por tipo:", error);
-      setPokemon(null);
+      console.error("❌ Error al filtrar:", error);
+      setItem(null);
     } finally {
       setCargando(false);
     }
   };
 
-  // 💪 Buscar Pokémon con HP alto
-  const buscarHpAlto = async () => {
+  // ⭐ 5) Función ejemplo: buscar un item destacado  
+  //     Puedes cambiar el criterio a lo que quieras
+  const buscarDestacado = async () => {
     setCargando(true);
     try {
-      let encontrado = false;
-      while (!encontrado) {
-        const idPrueba = Math.floor(Math.random() * 600) + 1;
-        const respuesta = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${idPrueba}`
-        );
-        const data = respuesta.data;
-        const hp = data.stats[0].base_stat;
-        if (hp > 100) {
-          setPokemon({
-            name: data.name,
-            image: data.sprites.front_default,
-            types: data.types.map((t: any) => t.type.name),
-            hp,
-            stats: data.stats.map((s: any) => ({
-              name: s.stat.name,
-              base: s.base_stat,
-            })),
-          });
-          setTipoActual(data.types[0].type.name);
-          encontrado = true;
-        }
-      }
+      const respuesta = await axios.get(
+        // 👇 AQUÍ TU ENDPOINT DE ITEMS ALEATORIOS O DESTACADOS
+        "https://TU_API.com/random"
+      );
+
+      const data = respuesta.data;
+
+      setItem({
+        name: data.name,
+        image: data.image_url,
+        category: data.category,
+        stats: data.stats?.map((s: any) => ({
+          name: s.name,
+          value: s.value,
+        })),
+      });
     } catch (error) {
-      console.error("❌ Error al buscar Pokémon con HP alto:", error);
+      console.error("❌ Error en destacado:", error);
     } finally {
       setCargando(false);
     }
   };
 
-  // ➡️ Avanzar al siguiente del mismo tipo
-  const siguientePokemon = async () => {
-    if (listaTipo.length > 0 && indexTipo < listaTipo.length - 1) {
-      const nuevoIndex = indexTipo + 1;
-      setIndexTipo(nuevoIndex);
-      await obtenerPokemon(listaTipo[nuevoIndex]);
+  // ⭐ 6) Siguiente en la categoría
+  const siguienteItem = async () => {
+    if (listaCategoria.length > 0 && indexCategoria < listaCategoria.length - 1) {
+      const nuevoIndex = indexCategoria + 1;
+      setIndexCategoria(nuevoIndex);
+      await obtenerItem(listaCategoria[nuevoIndex]);
     }
   };
 
-  // ⬅️ Retroceder al anterior del mismo tipo
-  const anteriorPokemon = async () => {
-    if (listaTipo.length > 0 && indexTipo > 0) {
-      const nuevoIndex = indexTipo - 1;
-      setIndexTipo(nuevoIndex);
-      await obtenerPokemon(listaTipo[nuevoIndex]);
+  // ⭐ 7) Anterior en la categoría
+  const anteriorItem = async () => {
+    if (listaCategoria.length > 0 && indexCategoria > 0) {
+      const nuevoIndex = indexCategoria - 1;
+      setIndexCategoria(nuevoIndex);
+      await obtenerItem(listaCategoria[nuevoIndex]);
     }
   };
 
-  // ⚙️ Cargar inicial
+  // ⭐ 8) Cargar algo inicial al entrar
   useEffect(() => {
-    obtenerPokemon(1);
+    obtenerItem(1); // 👈 Cambia esto si quieres que cargue otro ID
   }, []);
 
+  // ⭐ 9) Loading
   if (cargando) {
     return (
       <View className="flex-1 justify-center items-center bg-pink-200">
         <ActivityIndicator size="large" color="red" />
-        <Text className="mt-2 text-lg font-medium">Cargando Pokémon...</Text>
+        <Text className="mt-2 text-lg font-medium">Cargando...</Text>
       </View>
     );
   }
 
+  // ⭐ 10) Render
   return (
     <ScrollView className="flex-1 bg-pink-200">
       <View className="justify-center items-center p-4">
-        <Text>              </Text>
-        <Text className="text-3xl font-bold mb-6 text-red-500">Pokédex</Text>
-        <Text className="text-2xl font-medium mr-2 text-blue-500 text-center">
+
+        <Text className="text-3xl font-bold mb-4 text-red-500">Mi App</Text>
+        <Text className="text-lg font-medium text-blue-500 text-center mb-4">
           Busca por nombre, número o usa los filtros:
         </Text>
 
-        {/* 🔍 Input de búsqueda */}
+        {/* 🔍 Buscar */}
         <View className="flex-row items-center mb-4 w-72">
           <TextInput
             value={busqueda}
             onChangeText={setBusqueda}
-            placeholder="Buscar por nombre o número"
+            placeholder="Buscar ID o nombre"
             className="flex-1 border border-gray-400 rounded-lg px-3 py-2 text-base"
           />
           <Button title="Buscar" onPress={buscar} />
         </View>
 
-        {/* 🎯 Botones de filtro */}
+        {/* 🎯 Filtros (cámbialos según tu API) */}
         <View className="flex-row flex-wrap justify-center mb-5 gap-2">
-          {["fire", "water", "grass", "electric"].map((tipo) => (
+          {["categoria1", "categoria2", "categoria3"].map((cat) => (
             <TouchableOpacity
-              key={tipo}
+              key={cat}
               className="bg-orange-400 px-3 py-2 rounded-xl"
-              onPress={() => buscarPorTipo(tipo)}
+              onPress={() => buscarPorCategoria(cat)}
             >
               <Text className="text-white font-semibold capitalize">
-                {tipo}
+                {cat}
               </Text>
             </TouchableOpacity>
           ))}
           <TouchableOpacity
             className="bg-purple-500 px-3 py-2 rounded-xl"
-            onPress={buscarHpAlto}
+            onPress={buscarDestacado}
           >
-            <Text className="text-white font-semibold">HP &gt; 100</Text>
+            <Text className="text-white font-semibold">Destacado ⭐</Text>
           </TouchableOpacity>
         </View>
 
-        {/* 🎨 Mostrar Pokémon */}
-        {pokemon ? (
+        {/* 🎨 Mostrar Item */}
+        {item ? (
           <View className="justify-center items-center bg-rose-400 p-4 rounded-2xl shadow-md">
-            <Image source={{ uri: pokemon.image }} className="w-40 h-40" />
+
+            {/* NOMBRE */}
             <Text className="text-2xl font-semibold mt-4">
-              {pokemon.name.toUpperCase()}
+              {item.name.toUpperCase()}
             </Text>
 
-            <Text className="text-lg text-purple-700 mt-2">
-              Tipo: {pokemon.types.join(", ").toUpperCase()}
-            </Text>
+            {/* CATEGORÍA */}
+            {item.category && (
+              <Text className="text-lg text-purple-700 mt-2">
+                Categoría: {item.category.toUpperCase()}
+              </Text>
+            )}
 
-            <View className="mt-3">
-              {pokemon.stats.map((s, index) => (
-                <Text key={index} className="text-base text-blue-700">
-                  {s.name.toUpperCase()}: {s.base}
-                </Text>
-              ))}
-            </View>
           </View>
         ) : (
-          <Text className="text-lg text-red-500 mt-4">
-            Pokémon no encontrado
-          </Text>
+          <Text className="text-lg text-red-500 mt-4">No encontrado</Text>
         )}
 
-        {/* ⬅️➡️ Botones de navegación */}
+        {/* Navegación */}
         <View className="flex-row mt-6 space-x-4">
-          <Button title="Anterior" onPress={anteriorPokemon} />
-          <Button title="Siguiente" onPress={siguientePokemon} />
+          <Button title="Anterior" onPress={anteriorItem} />
+          <Button title="Siguiente" onPress={siguienteItem} />
         </View>
       </View>
     </ScrollView>
