@@ -7,7 +7,7 @@
       { "id": "1", "text": "a comment about post 1", "postId": "1" },
       { "id": "2", "text": "another comment about post 1", "postId": "1" }
     ],
-    "cosas":[
+    "Tasks":[
       { "id": "1", "title": "Tarea 1", "description": "XD es prueba" }
     ],
     "profile": {
