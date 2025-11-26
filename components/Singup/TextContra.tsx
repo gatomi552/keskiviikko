@@ -71,7 +71,7 @@ const PasswordInput = () => {
     <View className="gap-4">
 
       {/* PASSWORD */}
-      <View>
+      <View className="w-4/5 my-2">
         <TextInput
           secureTextEntry
           className={`h-15 ${borderClass1} border px-3 rounded-md text-base`}
@@ -85,16 +85,16 @@ const PasswordInput = () => {
       </View>
 
       {/* CONFIRM PASSWORD */}
-      <View>
+      <View className="w-4/5 my-2">
         <TextInput
           secureTextEntry
-          className={`h-15 ${borderClass2} border px-3 rounded-md text-base`}
+          className={`h-15 ${borderClass2} border px-3 rounded-md text-base `}
           placeholder="Repetir contraseña"
           value={password2}
           onChangeText={handlePassword2Change}
         />
         {errorMatch && (
-          <Text className="text-red-500 mt-1 text-xs">{errorMatch}</Text>
+          <Text className="text-red-500 mt-1 text-xs ">{errorMatch}</Text>
         )}
       </View>
 

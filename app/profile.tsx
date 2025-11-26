@@ -2,6 +2,7 @@ import { Text, View } from "react-native";
 import TextField from "@/components/Singup/Textfield";
 import Textname from "@/components/Singup/Textname";
 import TextContra from "@/components/Singup/TextContra";
+import "@/global.css"
 
 export default function Tab() {
   return (

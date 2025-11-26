@@ -41,7 +41,7 @@ const Textname = () => {
     // Define el estilo del borde dinámicamente
     const inputBorderClass = error ? 'border-red-500' : 'border-gray-500';
     return (
-        <View>
+        <View className="w-4/5 my-2">
             <TextInput
                 className={`h-15 ${inputBorderClass} border px-3 rounded-md text-base`} 
                 placeholder="Pablito                                                              "
