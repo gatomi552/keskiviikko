@@ -21,13 +21,13 @@ export default function FormTarea({
   editarTarea,
 }: FormProps) {
   return (
-    <View className="bg-white p-4 rounded-xl shadow">
+    <View className="bg-cyan-700 p-4 rounded-xl shadow">
       <Text className="text-lg font-semibold">Título de la tarea</Text>
       <TextInput
         value={titulo}
         onChangeText={setTitulo}
         placeholder="Ej: Comprar comida"
-        className="border border-gray-400 rounded-lg p-2 mt-2"
+        className="border border-sky-500 rounded-lg p-2 mt-2"
       />
 
       <Text className="text-lg font-semibold mt-3">Descripción</Text>
@@ -35,7 +35,7 @@ export default function FormTarea({
         value={descripcion}
         onChangeText={setDescripcion}
         placeholder="Detalles..."
-        className="border border-gray-400 rounded-lg p-2 mt-2"
+        className="border border-sky-500 rounded-lg p-2 mt-2"
       />
 
       <View className="mt-4">

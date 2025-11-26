@@ -81,9 +81,9 @@ export default function AppTareas() {
   }, []);
 
   return (
-    <ScrollView className="flex-1 bg-gray-200 p-4">
-      <Text className="text-3xl font-bold text-center text-blue-600 mb-4">
-        Administrador de Tareas
+    <ScrollView className="flex-1 bg-emerald-800/25 p-4">
+      <Text className="text-3xl font-bold text-center text-rose-400 mb-4">
+        Administrar Tareas
       </Text>
 
       {/* FORMULARIO */}
