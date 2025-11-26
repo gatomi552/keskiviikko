@@ -11,7 +11,7 @@ export default function TabLayout() {
         <Label>Perfiles</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="settings">
-        <Label>Settings</Label>
+      <Label hidden />
       </NativeTabs.Trigger>
     </NativeTabs>
   );
