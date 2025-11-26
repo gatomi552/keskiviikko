@@ -6,7 +6,7 @@ import "@/global.css"
 
 export default function Tab() {
   return (
-    <View className="flex-1 justify-center items-center bg-red-100 h-screen">
+    <View className="flex-1 justify-center items-center bg-#D97E96 h-screen text-center">
       <Text className="text-xl font-bold text-gray-900 mb-2">Escribe tu nombre</Text>
       <Textname></Textname>
       <Text className="text-xl font-bold text-gray-900 mb-2">Escribe tu email</Text>
