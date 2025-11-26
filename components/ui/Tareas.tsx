@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, ActivityIndicator, TextInput, ScrollView, TouchableOpacity,
-} from "react-native";
+import { View, Text, Button, ActivityIndicator, 
+  TextInput, ScrollView, TouchableOpacity,} from "react-native";
 import axios from "axios";
 
 // 🔹 1) Cambia el tipo de datos según tu API  
 // 👇 EJEMPLO DE FORMATO (modifícalo a tu necesidad)
 type Item = {
   name: string;
-  image?: string;
   category?: string;
-  stats?: { name: string; value: number }[];
 };
 
 export default function MiApp() {
@@ -36,12 +34,7 @@ export default function MiApp() {
       // 👇 ADAPTA ESTO SEGÚN TU API
       setItem({
         name: data.name,                   // Nombre del item
-        image: data.image_url,             // Imagen (si existe)
         category: data.category,           // Categoría
-        stats: data.stats?.map((s: any) => ({
-          name: s.name,
-          value: s.value,
-        })),
       });
 
       setCategoriaActual(data.category);
@@ -99,12 +92,7 @@ export default function MiApp() {
 
       setItem({
         name: data.name,
-        image: data.image_url,
         category: data.category,
-        stats: data.stats?.map((s: any) => ({
-          name: s.name,
-          value: s.value,
-        })),
       });
     } catch (error) {
       console.error("❌ Error en destacado:", error);

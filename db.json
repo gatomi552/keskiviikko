@@ -9,7 +9,7 @@
     ],
     "cosas":[
         {"id": "Tareas", "text":"prueba de API" },
-        {"id": "2", "text":"Pedido" },
+        {"id": "Categoria", "text":"Pedido" },
         {"id": "3", "text":"Completo" }
     ],
     "profile": {
