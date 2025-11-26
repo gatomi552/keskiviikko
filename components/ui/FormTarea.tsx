@@ -1,5 +1,5 @@
 // components/FormTarea.tsx
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
 type FormProps = {//propiedades
   titulo: string;
@@ -39,10 +39,20 @@ export default function FormTarea({
       />
 
       <View className="mt-4">
-        {editandoId ? (
-          <Button title="Guardar cambios" color="green" onPress={editarTarea} />
-        ) : (
-          <Button title="Agregar tarea" onPress={agregarTarea} />
+      {editandoId ? (
+      <TouchableOpacity onPress={editarTarea}
+        className="bg-green-600 py-3 rounded-xl mt-4 active:bg-green-700" >
+        <Text className="text-white text-center font-semibold text-lg">
+          Guardar cambios
+        </Text>
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacity onPress={agregarTarea}
+        className="bg-blue-600 py-3 rounded-xl mt-4 active:bg-blue-700" >
+        <Text className="text-white text-center font-semibold text-lg">
+          Agregar tarea
+        </Text>
+      </TouchableOpacity>
         )}
       </View>
     </View>
