@@ -10,7 +10,7 @@ export default function TabLayout() {
       <NativeTabs.Trigger name="settings">
         <Label>Settings</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="perfil">
+      <NativeTabs.Trigger name="profile">{/*Se necesita el nombre de la carpeta xd*/}
         <Label>Perfiles</Label>
       </NativeTabs.Trigger>
     </NativeTabs>
