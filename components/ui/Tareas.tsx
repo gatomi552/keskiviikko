@@ -139,7 +139,6 @@ export default function MiApp() {
     <ScrollView className="flex-1 bg-pink-200">
       <View className="justify-center items-center p-4">
 
-        <Text className="text-3xl font-bold mb-4 text-red-500">Mi App</Text>
         <Text className="text-lg font-medium text-blue-500 text-center mb-4">
           Busca por nombre, número o usa los filtros:
         </Text>
