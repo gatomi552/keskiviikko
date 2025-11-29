@@ -1,5 +1,8 @@
 {
   "expo": {
+    "name": "keskiviikko",
+    "slug": "keskiviikko",
+    "scheme": "keskiviikko",
     "web": {
       "bundler": "metro"
     }
