@@ -3,6 +3,7 @@
     "name": "keskiviikko",
     "slug": "keskiviikko",
     "scheme": "keskiviikko",
+    "userInterfaceStyle": "automatic",
     "web": {
       "bundler": "metro"
     }

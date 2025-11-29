@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, Text } from "react-native";
 import axios from "axios";
 
-// COMPONENTES
 import FormTarea from "@/components/ui/FormTarea";
 import ListaTareas from "@/components/ui/ListaTareas";
 
-// API URL (CAMBIA ESTA)
-const API_URL = "http://localhost:3000/Tasks";
+// URL CORRECTA (sin /tasks al final)
+const API_URL = "http://192.168.18.162:3000/Tasks";
 
 type Tarea = {
   id: string;
@@ -24,7 +23,7 @@ export default function AppTareas() {
 
   const obtenerTareas = async () => {
     try {
-      const res = await axios.get(`${API_URL}/tasks`);
+      const res = await axios.get(API_URL);
       setTareas(res.data);
     } catch (err) {
       console.log("❌ Error obteniendo tareas:", err);
@@ -33,10 +32,11 @@ export default function AppTareas() {
 
   const agregarTarea = async () => {
     try {
-      await axios.post(`${API_URL}/tasks`, {
+      await axios.post(API_URL, {
         title: titulo,
-        description: descripcion,
+        description: descripcion
       });
+
       setTitulo("");
       setDescripcion("");
       obtenerTareas();
@@ -47,9 +47,9 @@ export default function AppTareas() {
 
   const editarTarea = async () => {
     try {
-      await axios.put(`${API_URL}/tasks/${editandoId}`, {
+      await axios.put(`${API_URL}/${editandoId}`, {
         title: titulo,
-        description: descripcion,
+        description: descripcion
       });
 
       setTitulo("");
@@ -63,7 +63,7 @@ export default function AppTareas() {
 
   const eliminarTarea = async (id: string) => {
     try {
-      await axios.delete(`${API_URL}/tasks/${id}`);
+      await axios.delete(`${API_URL}/${id}`);
       obtenerTareas();
     } catch (err) {
       console.log("❌ Error eliminando:", err);
@@ -86,7 +86,6 @@ export default function AppTareas() {
         Administrar Tareas
       </Text>
 
-      {/* FORMULARIO */}
       <FormTarea
         titulo={titulo}
         descripcion={descripcion}
@@ -101,7 +100,6 @@ export default function AppTareas() {
         Mis tareas:
       </Text>
 
-      {/* LISTA DE TAREAS */}
       <ListaTareas
         tareas={tareas}
         onEditar={seleccionarParaEditar}
