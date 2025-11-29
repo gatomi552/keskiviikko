@@ -8,7 +8,7 @@ import FormTarea from "@/components/ui/FormTarea";
 import ListaTareas from "@/components/ui/ListaTareas";
 
 // API URL (CAMBIA ESTA)
-const API_URL = "http://localhost:3000/cosas";
+const API_URL = "http://192.168.18.162:3000/cosas";
 
 type Tarea = {
   id: string;
