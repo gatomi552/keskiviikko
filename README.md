@@ -6,6 +6,17 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Get started
 
+> [!IMPORTANT]
+> Leer:
+> Esta aplicacion realizada como sumativa no funciona por completo por un problema de el servidor
+> aparentemente eso es pero ni idea, el codigo esta alli para que funcione pero no lo hace y manda
+> error de que no encuentra el server entonces nose que hacer
+
+https://github.com/user-attachments/assets/243a5641-3c10-49a8-9bb1-cb259f22133a
+
+https://youtu.be/96iVV7KxG-Q
+visite este link para ver el error xd - ya no es culpa es muy pesado
+
 #### Android
 
 Android previews are defined as a `workspace.onStart` hook and started as a vscode task when the workspace is opened/started.
