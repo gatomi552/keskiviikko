@@ -1,13 +1,13 @@
 // AppTareas.tsx
 import React, { useState, useEffect } from "react";
-import { ScrollView, Text } from "react-native";
+import { ScrollView, Text, TouchableOpacity } from "react-native";
 import axios from "axios";
 
 import FormTarea from "@/components/ui/FormTarea";
 import ListaTareas from "@/components/ui/ListaTareas";
 
 // URL CORRECTA (sin /tasks al final)
-const API_URL = "http://localhost:3000/Tasks";
+const API_URL = "https://3000-firebase-keskiviikko-1764010071845.cluster-j6d3cbsvdbe5uxnhqrfzzeyj7i.cloudworkstations.dev/Tasks";
 
 type Tarea = {
   id: string;
@@ -105,6 +105,16 @@ export default function AppTareas() {
         onEditar={seleccionarParaEditar}
         onEliminar={eliminarTarea}
       />
+
+      <TouchableOpacity
+        onPress={obtenerTareas}
+        className="bg-blue-500 p-3 rounded-lg mb-4"
+      >
+        <Text className="text-white text-center font-semibold">
+          🔄 Actualizar
+        </Text>
+      </TouchableOpacity>
+
     </ScrollView>
   );
 }
